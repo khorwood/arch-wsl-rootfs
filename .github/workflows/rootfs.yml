@@ -1,0 +1,42 @@
+on:
+  push:
+    tags:
+      - '20*'
+
+name: Build rootfs package
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ubuntu:latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+    
+      - name: build
+        run: |
+          apt update
+          apt install curl -y
+          ./build.sh
+
+      - name: release
+        id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: upload
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ./rootfs.tar.gz
+          asset_name: rootfs.tar.gz
+          asset_content_type: application/gzip
