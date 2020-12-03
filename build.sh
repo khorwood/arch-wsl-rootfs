@@ -1,5 +1,5 @@
 #!/bin/bash
-RELEASE="2020.11.01"
+RELEASE="2020.12.01"
 
 curl -O "https://mirrors.edge.kernel.org/archlinux/iso/$RELEASE/archlinux-bootstrap-$RELEASE-x86_64.tar.gz"
 
