@@ -1,4 +1,4 @@
-# arch-wsl-rootfs
+# archlinux-wsl-rootfs
 
 This script adapts an archlinux-bootstrap package to a WSL compatible rootfs
 
